@@ -3,14 +3,14 @@ import { View, Text } from 'react-native'
 
 import { styles } from './styles'
 
-class TvShowsScreen extends Component {
+class MovieScreen extends Component {
   render() {
     return (
       <View>
-        <Text style={styles.heading}>Popular TV Shows</Text>
+        <Text>Movie Screen</Text>
       </View>
     )
   }
 }
 
-export default TvShowsScreen
+export default MovieScreen
