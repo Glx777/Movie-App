@@ -7,7 +7,7 @@ import { chooseMovie, addPoster } from '../../store/actions'
 
 import { styles } from './styles'
 
-const PopularMovie = ({
+const UpcomingMovie = ({
   title,
   poster,
   basePosterPath,
@@ -17,7 +17,7 @@ const PopularMovie = ({
 }) => {
   return (
     <TouchableOpacity
-      style={styles.popularMovieContainer}
+      style={styles.topRatedMovieContainer}
       onPress={() => {
         dispatch(chooseMovie(movieID))
         dispatch(addPoster(poster))
@@ -35,7 +35,7 @@ const PopularMovie = ({
   )
 }
 
-PopularMovie.propTypes = {
+UpcomingMovie.propTypes = {
   title: PropTypes.string.isRequired,
   poster: PropTypes.string.isRequired,
   basePosterPath: PropTypes.string.isRequired,
@@ -48,4 +48,4 @@ const mapStateToProps = state => ({
   basePosterPath: state.basePosterPath
 })
 
-export default connect(mapStateToProps)(PopularMovie)
+export default connect(mapStateToProps)(UpcomingMovie)

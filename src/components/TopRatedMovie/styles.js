@@ -1,9 +1,11 @@
 import { StyleSheet, Dimensions } from 'react-native'
 
 export const styles = StyleSheet.create({
-  popularMovieContainer: {
+  topRatedMovieContainer: {
     width: Dimensions.get('window').width * 0.32,
-    marginRight: 10
+    marginRight: 10,
+    borderWidth: 1,
+    borderColor: '#fff'
   },
   image: {
     width: '100%',

@@ -53,25 +53,34 @@ const TVShowsDrawer = createDrawerNavigator({
   }
 })
 
-const MainNavigator = createBottomTabNavigator({
-  Movies: {
-    screen: MoviesScreenDrawer,
-    navigationOptions: {
-      tabBarLabel: 'Movies',
-      tabBarIcon: ({ tintColor }) => (
-        <Icon name="film" size={30} color={tintColor} />
-      )
+const MainNavigator = createBottomTabNavigator(
+  {
+    Movies: {
+      screen: MoviesScreenDrawer,
+      navigationOptions: {
+        tabBarLabel: 'Movies',
+        tabBarIcon: ({ tintColor }) => (
+          <Icon name="film" size={30} color={tintColor} />
+        )
+      }
+    },
+    Shows: {
+      screen: TVShowsDrawer,
+      navigationOptions: {
+        tabBarLabel: 'TV Shows',
+        tabBarIcon: ({ tintColor }) => (
+          <Icon name="tv" size={30} color={tintColor} />
+        )
+      }
     }
   },
-  Shows: {
-    screen: TVShowsDrawer,
-    navigationOptions: {
-      tabBarLabel: 'TV Shows',
-      tabBarIcon: ({ tintColor }) => (
-        <Icon name="tv" size={30} color={tintColor} />
-      )
+  {
+    tabBarOptions: {
+      activeBackgroundColor: '#222',
+      inactiveBackgroundColor: '#222',
+      activeTintColor: '#fff'
     }
   }
-})
+)
 
 export const AppContainer = createAppContainer(MainNavigator)
