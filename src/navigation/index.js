@@ -2,26 +2,37 @@ import React from 'react'
 import {
   createBottomTabNavigator,
   createAppContainer,
-  createDrawerNavigator,
   createStackNavigator
 } from 'react-navigation'
+import { responsiveFontSize } from 'react-native-responsive-dimensions'
 import Icon from 'react-native-vector-icons/FontAwesome'
 
-import MoviesScreen from '../screens/MoviesScreen'
-import TvShowsScreen from '../screens/TvShowsScreen'
-import MovieScreen from '../screens/MovieScreen'
+import MoviesScreen from '../screens/TabScreens/MoviesScreen'
+import TvShowsScreen from '../screens/TabScreens/TvShowsScreen'
+import MovieScreen from '../screens/StackScreens/MovieScreen'
+import TvShowScreen from '../screens/StackScreens/TvShowScreen'
 
 const MoviesScreenStack = createStackNavigator({
   Movies: {
     screen: MoviesScreen,
     navigationOptions: {
-      title: 'Movies'
+      title: 'Movies',
+      headerTintColor: '#fff',
+      headerStyle: {
+        backgroundColor: '#191919',
+        borderBottomWidth: 0
+      }
     }
   },
   Movie: {
     screen: MovieScreen,
     navigationOptions: {
-      title: 'Movie'
+      title: 'Movie Details',
+      headerTintColor: '#fff',
+      headerStyle: {
+        backgroundColor: '#191919',
+        borderBottomWidth: 0
+      }
     }
   }
 })
@@ -30,25 +41,23 @@ const TVShowsStack = createStackNavigator({
   Shows: {
     screen: TvShowsScreen,
     navigationOptions: {
-      title: 'TV Shows'
+      title: 'TV Shows',
+      headerTintColor: '#fff',
+      headerStyle: {
+        backgroundColor: '#191919',
+        borderBottomWidth: 0
+      }
     }
-  }
-})
-
-const MoviesScreenDrawer = createDrawerNavigator({
-  Movies: {
-    screen: MoviesScreenStack,
+  },
+  Show: {
+    screen: TvShowScreen,
     navigationOptions: {
-      drawerLabel: 'Movies'
-    }
-  }
-})
-
-const TVShowsDrawer = createDrawerNavigator({
-  Shows: {
-    screen: TVShowsStack,
-    navigationOptions: {
-      drawerLabel: 'TV Shows'
+      title: 'Show Details',
+      headerTintColor: '#fff',
+      headerStyle: {
+        backgroundColor: '#191919',
+        borderBottomWidth: 0
+      }
     }
   }
 })
@@ -56,7 +65,7 @@ const TVShowsDrawer = createDrawerNavigator({
 const MainNavigator = createBottomTabNavigator(
   {
     Movies: {
-      screen: MoviesScreenDrawer,
+      screen: MoviesScreenStack,
       navigationOptions: {
         tabBarLabel: 'Movies',
         tabBarIcon: ({ tintColor }) => (
@@ -65,7 +74,7 @@ const MainNavigator = createBottomTabNavigator(
       }
     },
     Shows: {
-      screen: TVShowsDrawer,
+      screen: TVShowsStack,
       navigationOptions: {
         tabBarLabel: 'TV Shows',
         tabBarIcon: ({ tintColor }) => (
@@ -76,9 +85,12 @@ const MainNavigator = createBottomTabNavigator(
   },
   {
     tabBarOptions: {
-      activeBackgroundColor: '#222',
-      inactiveBackgroundColor: '#222',
-      activeTintColor: '#fff'
+      activeBackgroundColor: '#191919',
+      inactiveBackgroundColor: '#191919',
+      activeTintColor: '#fff',
+      style: {
+        borderTopWidth: '0'
+      }
     }
   }
 )

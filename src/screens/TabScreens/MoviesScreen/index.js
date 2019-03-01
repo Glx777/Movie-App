@@ -1,5 +1,11 @@
 import React, { Component } from 'react'
-import { View, Text, ActivityIndicator, ScrollView } from 'react-native'
+import {
+  View,
+  Text,
+  ActivityIndicator,
+  ScrollView,
+  StatusBar
+} from 'react-native'
 import axios from 'axios'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
@@ -8,12 +14,9 @@ import {
   addPopularMovies,
   addTopRatedMovies,
   addUpcomingMovies
-} from '../../store/actions'
-import PopularMovie from '../../components/PopularMovie'
-import TopRatedMovie from '../../components/TopRatedMovie'
-import UpcomingMovie from '../../components/UpcomingMovie'
-
-import { styles } from './styles'
+} from '../../../store/actions'
+import ListItem from '../../../components/ListItem'
+import { styles } from '../styles'
 
 class MoviesScreen extends Component {
   constructor() {
@@ -26,29 +29,24 @@ class MoviesScreen extends Component {
   async componentDidMount() {
     const { dispatch, token } = this.props
     await axios
-      .get(
-        `https://api.themoviedb.org/3/movie/popular?api_key=${token}&language=en-US&page=1`
+      .all([
+        axios.get(
+          `https://api.themoviedb.org/3/movie/popular?api_key=${token}&language=en-US&page=1`
+        ),
+        axios.get(
+          `https://api.themoviedb.org/3/movie/top_rated?api_key=${token}&language=en-US&page=1`
+        ),
+        axios.get(
+          `https://api.themoviedb.org/3/movie/upcoming?api_key=${token}&language=en-US&page=1`
+        )
+      ])
+      .then(
+        axios.spread((popular, topRated, upcoming) => {
+          dispatch(addPopularMovies(popular.data.results))
+          dispatch(addTopRatedMovies(topRated.data.results))
+          dispatch(addUpcomingMovies(upcoming.data.results))
+        })
       )
-      .then(res => {
-        dispatch(addPopularMovies(res.data.results))
-      })
-
-    await axios
-      .get(
-        `https://api.themoviedb.org/3/movie/top_rated?api_key=${token}&language=en-US&page=1`
-      )
-      .then(res => {
-        dispatch(addTopRatedMovies(res.data.results))
-      })
-
-    await axios
-      .get(
-        `https://api.themoviedb.org/3/movie/upcoming?api_key=${token}&language=en-US&page=1`
-      )
-      .then(res => {
-        dispatch(addUpcomingMovies(res.data.results))
-      })
-
     this.setState({ isLoading: false })
   }
 
@@ -61,49 +59,53 @@ class MoviesScreen extends Component {
       upcomingMovies
     } = this.props
     return (
-      <View style={styles.container}>
+      <View style={styles.wrapper}>
+        <StatusBar barStyle="light-content" />
         {isLoading ? (
-          <ActivityIndicator size="large" color="#222" />
+          <ActivityIndicator style={styles.spinner} size="large" color="#fff" />
         ) : (
           <ScrollView>
             <Text style={styles.heading}>Popular</Text>
             <ScrollView horizontal={true}>
-              <View style={styles.moviesContainer}>
+              <View style={styles.container}>
                 {popularMovies.map(popularMovie => (
-                  <PopularMovie
+                  <ListItem
                     poster={popularMovie.poster_path}
                     title={popularMovie.title}
                     key={popularMovie.id}
                     movieID={popularMovie.id}
                     navigation={navigation}
+                    type="Movie"
                   />
                 ))}
               </View>
             </ScrollView>
             <Text style={styles.heading}>Top Rated</Text>
             <ScrollView horizontal={true}>
-              <View style={styles.moviesContainer}>
-                {topRatedMovies.map(topRatedMovie => (
-                  <TopRatedMovie
-                    poster={topRatedMovie.poster_path}
-                    title={topRatedMovie.title}
-                    key={topRatedMovie.id}
-                    movieID={topRatedMovie.id}
+              <View style={styles.container}>
+                {topRatedMovies.map(popularMovie => (
+                  <ListItem
+                    poster={popularMovie.poster_path}
+                    title={popularMovie.title}
+                    key={popularMovie.id}
+                    movieID={popularMovie.id}
                     navigation={navigation}
+                    type="Movie"
                   />
                 ))}
               </View>
             </ScrollView>
             <Text style={styles.heading}>Upcoming</Text>
             <ScrollView horizontal={true}>
-              <View style={styles.moviesContainer}>
-                {upcomingMovies.map(upcomingMovie => (
-                  <UpcomingMovie
-                    poster={upcomingMovie.poster_path}
-                    title={upcomingMovie.title}
-                    key={upcomingMovie.id}
-                    movieID={upcomingMovie.id}
+              <View style={[styles.container, styles.lastContainer]}>
+                {upcomingMovies.map(popularMovie => (
+                  <ListItem
+                    poster={popularMovie.poster_path}
+                    title={popularMovie.title}
+                    key={popularMovie.id}
+                    movieID={popularMovie.id}
                     navigation={navigation}
+                    type="Movie"
                   />
                 ))}
               </View>

@@ -4,10 +4,9 @@ import axios from 'axios'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 
-import { addMovieDetails } from '../../store/actions'
-import MovieDetails from '../../components/MovieDetails'
-
-import { styles } from './styles'
+import { addMovieDetails } from '../../../store/actions'
+import ListItemDetails from '../../../components/ListItemDetails'
+import { styles } from '../styles'
 
 class MovieScreen extends Component {
   constructor() {
@@ -36,9 +35,9 @@ class MovieScreen extends Component {
     return (
       <View style={styles.container}>
         {isLoading ? (
-          <ActivityIndicator size="large" color="#222" />
+          <ActivityIndicator style={styles.spinner} size="large" color="#fff" />
         ) : (
-          <MovieDetails details={movieDetails} />
+          <ListItemDetails details={movieDetails} />
         )}
       </View>
     )
@@ -54,8 +53,8 @@ MovieScreen.propTypes = {
 
 const mapStateToProps = state => ({
   token: state.token,
-  movieID: state.currentMovie,
-  movieDetails: state.movieDetails
+  movieDetails: state.movieDetails,
+  movieID: state.currentMovie
 })
 
 export default connect(mapStateToProps)(MovieScreen)
