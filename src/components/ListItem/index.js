@@ -1,16 +1,35 @@
 import React from 'react'
-import { TouchableOpacity, Text, Image, View } from 'react-native'
 import { connect } from 'react-redux'
-import PropTypes from 'prop-types'
-
 import {
-  chooseMovie,
-  addMoviePoster,
-  addTvShowPoster,
-  chooseTVShow
-} from '../../store/actions'
+  responsiveWidth,
+  responsiveHeight,
+  responsiveFontSize
+} from 'react-native-responsive-dimensions'
+import PropTypes from 'prop-types'
+import styled from 'styled-components/native'
 
-import { styles } from './styles'
+import { chooseMovie, chooseTVShow } from '../../store/actions'
+
+const Container = styled.TouchableOpacity`
+  width: 120;
+  margin-right: 15;
+`
+
+const PosterContainer = styled.View`
+  height: 86%;
+`
+
+const Poster = styled.Image`
+  width: 100%;
+  height: 100%;
+`
+
+const Title = styled.Text`
+  color: #fff;
+  margin-top: ${({ marginTop }) => marginTop};
+  align-self: center;
+  font-size: ${({ fontSize }) => fontSize};
+`
 
 const ListItem = ({
   title,
@@ -23,38 +42,38 @@ const ListItem = ({
   type
 }) => {
   return (
-    <TouchableOpacity
-      style={styles.listItemContainer}
+    <Container
       onPress={() => {
         if (type === 'Movie') {
           dispatch(chooseMovie(movieID))
-          dispatch(addMoviePoster(poster))
           navigation.navigate(type)
         } else {
           dispatch(chooseTVShow(tvShowID))
-          dispatch(addTvShowPoster(poster))
           navigation.navigate(type)
         }
       }}
     >
-      <View style={styles.imageContainer}>
-        <Image
+      <PosterContainer>
+        <Poster
           activeOpacity={0.8}
-          style={styles.image}
           resizeMode="cover"
           source={{ uri: basePosterPath + poster }}
         />
-      </View>
-      <Text style={styles.title}>
+      </PosterContainer>
+      <Title
+        marginRight={responsiveWidth(10)}
+        marginTop={responsiveHeight(1)}
+        fontSize={responsiveFontSize(2)}
+      >
         {title.length > 13 ? title.slice(0, 12) + '...' : title}
-      </Text>
-    </TouchableOpacity>
+      </Title>
+    </Container>
   )
 }
 
 ListItem.propTypes = {
   title: PropTypes.string.isRequired,
-  poster: PropTypes.string.isRequired,
+  poster: PropTypes.string,
   basePosterPath: PropTypes.string.isRequired,
   tvShowID: PropTypes.number,
   movieID: PropTypes.number,
@@ -65,7 +84,8 @@ ListItem.propTypes = {
 
 ListItem.defaultProps = {
   tvShowID: null,
-  movieID: null
+  movieID: null,
+  poster: null
 }
 
 const mapStateToProps = state => ({

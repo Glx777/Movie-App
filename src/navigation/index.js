@@ -4,7 +4,6 @@ import {
   createAppContainer,
   createStackNavigator
 } from 'react-navigation'
-import { responsiveFontSize } from 'react-native-responsive-dimensions'
 import Icon from 'react-native-vector-icons/FontAwesome'
 
 import MoviesScreen from '../screens/TabScreens/MoviesScreen'

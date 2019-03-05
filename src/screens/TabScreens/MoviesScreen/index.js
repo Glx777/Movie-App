@@ -9,6 +9,7 @@ import {
 import axios from 'axios'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
+import styled from 'styled-components/native'
 
 import {
   addPopularMovies,
@@ -17,6 +18,11 @@ import {
 } from '../../../store/actions'
 import ListItem from '../../../components/ListItem'
 import { styles } from '../styles'
+
+const Wrapper = styled.View`
+  flex: 1;
+  background-color: #191919;
+`
 
 class MoviesScreen extends Component {
   constructor() {
@@ -59,7 +65,7 @@ class MoviesScreen extends Component {
       upcomingMovies
     } = this.props
     return (
-      <View style={styles.wrapper}>
+      <Wrapper>
         <StatusBar barStyle="light-content" />
         {isLoading ? (
           <ActivityIndicator style={styles.spinner} size="large" color="#fff" />
@@ -112,7 +118,7 @@ class MoviesScreen extends Component {
             </ScrollView>
           </ScrollView>
         )}
-      </View>
+      </Wrapper>
     )
   }
 }

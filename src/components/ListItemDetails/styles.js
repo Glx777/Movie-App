@@ -6,9 +6,6 @@ import {
 } from 'react-native-responsive-dimensions'
 
 export const styles = StyleSheet.create({
-  container: {
-    flex: 1
-  },
   image: {
     height: responsiveHeight(50),
     width: '100%',

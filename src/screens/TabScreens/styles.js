@@ -5,10 +5,6 @@ import {
 } from 'react-native-responsive-dimensions'
 
 export const styles = StyleSheet.create({
-  wrapper: {
-    flex: 1,
-    backgroundColor: '#191919'
-  },
   spinner: {
     marginTop: responsiveHeight(40)
   },

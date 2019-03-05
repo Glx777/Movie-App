@@ -1,12 +1,21 @@
 import React, { Component } from 'react'
-import { View, ActivityIndicator } from 'react-native'
 import axios from 'axios'
 import { connect } from 'react-redux'
+import { responsiveHeight } from 'react-native-responsive-dimensions'
 import PropTypes from 'prop-types'
+import styled from 'styled-components/native'
 
 import { addTVShowDetails } from '../../../store/actions'
 import ListItemDetails from '../../../components/ListItemDetails'
-import { styles } from '../styles'
+
+const Container = styled.View`
+  flex: 1;
+  background-color: #191919;
+`
+
+const Spinner = styled.ActivityIndicator`
+  margin-top: ${({ marginTop }) => marginTop};
+`
 
 class TvShowScreen extends Component {
   constructor() {
@@ -33,13 +42,13 @@ class TvShowScreen extends Component {
     const { isLoading } = this.state
     const { tvShowDetails } = this.props
     return (
-      <View style={styles.container}>
+      <Container>
         {isLoading ? (
-          <ActivityIndicator style={styles.spinner} size="large" color="#fff" />
+          <Spinner size="large" color="#fff" marginTop={responsiveHeight(20)} />
         ) : (
           <ListItemDetails details={tvShowDetails} />
         )}
-      </View>
+      </Container>
     )
   }
 }

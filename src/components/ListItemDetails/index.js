@@ -2,10 +2,15 @@ import React, { Component } from 'react'
 import { View, Text, Image, ScrollView } from 'react-native'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
+import styled from 'styled-components/native'
 
 import Genre from '../Genre'
 
 import { styles } from './styles'
+
+const Container = styled.View`
+  flex: 1;
+`
 
 class ListItemDetails extends Component {
   transformTime(time) {
@@ -18,7 +23,7 @@ class ListItemDetails extends Component {
     const { details, basePosterPath, moviePoster, tvShowPoster } = this.props
     const poster = details.title ? moviePoster : tvShowPoster
     return (
-      <View style={styles.container}>
+      <Container>
         <ScrollView>
           <Image
             style={styles.image}
@@ -36,9 +41,11 @@ class ListItemDetails extends Component {
                   ? details.release_date.slice(0, 4)
                   : details.first_air_date.slice(0, 4)}
               </Text>
-              <Text style={styles.text}>
-                {this.transformTime(details.runtime)}
-              </Text>
+              {details.runtime ? (
+                <Text style={styles.text}>
+                  {this.transformTime(details.runtime)}
+                </Text>
+              ) : null}
               <Text style={styles.text}>
                 Adult: {details.adult ? 'Yes' : 'No'}
               </Text>
@@ -69,7 +76,7 @@ class ListItemDetails extends Component {
             ) : null}
           </View>
         </ScrollView>
-      </View>
+      </Container>
     )
   }
 }

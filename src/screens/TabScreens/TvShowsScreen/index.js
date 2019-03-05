@@ -3,6 +3,7 @@ import { View, Text, ActivityIndicator, ScrollView } from 'react-native'
 import axios from 'axios'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
+import styled from 'styled-components/native'
 
 import {
   addPopularTVShows,
@@ -11,6 +12,11 @@ import {
 } from '../../../store/actions'
 import ListItem from '../../../components/ListItem'
 import { styles } from '../styles'
+
+const Wrapper = styled.View`
+  flex: 1;
+  background-color: #191919;
+`
 
 class TvShowsScreen extends Component {
   constructor() {
@@ -53,7 +59,7 @@ class TvShowsScreen extends Component {
       onTheAirTvShows
     } = this.props
     return (
-      <View style={styles.wrapper}>
+      <Wrapper>
         {isLoading ? (
           <ActivityIndicator style={styles.spinner} size="large" color="#fff" />
         ) : (
@@ -105,7 +111,7 @@ class TvShowsScreen extends Component {
             </ScrollView>
           </ScrollView>
         )}
-      </View>
+      </Wrapper>
     )
   }
 }
