@@ -13,13 +13,17 @@ const initialState = {
   currentTvShow: null,
   tvShowDetails: {},
   moviePoster: null,
-  tvShowPoster: null
+  tvShowPoster: null,
+  inTheatersMovies: []
 }
 
 export const reducers = (state = initialState, action) => {
   switch (action.type) {
     case 'ADD_POPULAR_MOVIES':
       return { ...state, popularMovies: [...action.payload] }
+      break
+    case 'ADD_IN_THEATERS_MOVIES':
+      return { ...state, inTheatersMovies: [...action.payload] }
       break
     case 'ADD_TOP_RATED_MOVIES':
       return { ...state, topRatedMovies: [...action.payload] }

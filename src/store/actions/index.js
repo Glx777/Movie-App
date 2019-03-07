@@ -29,6 +29,11 @@ export const addMoviePoster = poster => ({
   payload: poster
 })
 
+export const addInTheatersMovies = movies => ({
+  type: 'ADD_IN_THEATERS_MOVIES',
+  payload: movies
+})
+
 // TV Shows
 
 export const addPopularTVShows = tvShows => ({

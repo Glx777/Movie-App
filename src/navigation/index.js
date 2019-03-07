@@ -1,4 +1,5 @@
 import React from 'react'
+import { Platform } from 'react-native'
 import {
   createBottomTabNavigator,
   createAppContainer,
@@ -88,7 +89,7 @@ const MainNavigator = createBottomTabNavigator(
       inactiveBackgroundColor: '#191919',
       activeTintColor: '#fff',
       style: {
-        borderTopWidth: '0'
+        borderTopWidth: Platform.OS === 'ios' ? '0' : null
       }
     }
   }

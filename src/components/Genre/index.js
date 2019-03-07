@@ -2,25 +2,18 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components/native'
 import {
-  responsiveWidth,
-  responsiveFontSize
+  responsiveFontSize,
+  responsiveWidth
 } from 'react-native-responsive-dimensions'
 
 const GenreText = styled.Text`
   color: #fff;
-  margin-right: ${({ marginRight }) => marginRight};
-  font-size: ${({ fontSize }) => fontSize};
+  font-size: ${responsiveFontSize(2)};
+  margin-right: ${responsiveWidth(2)};
 `
 
 const Genre = ({ genre: { name } }) => {
-  return (
-    <GenreText
-      fontSize={responsiveFontSize(2)}
-      marginRight={responsiveWidth(10)}
-    >
-      {name}
-    </GenreText>
-  )
+  return <GenreText>{name}</GenreText>
 }
 
 Genre.propTypes = {

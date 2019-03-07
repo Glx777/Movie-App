@@ -1,5 +1,10 @@
 import React, { Component } from 'react'
-import { View, Text, ActivityIndicator, ScrollView } from 'react-native'
+import { ScrollView } from 'react-native'
+import {
+  responsiveHeight,
+  responsiveWidth,
+  responsiveFontSize
+} from 'react-native-responsive-dimensions'
 import axios from 'axios'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
@@ -11,11 +16,32 @@ import {
   addUpcomingTVShows
 } from '../../../store/actions'
 import ListItem from '../../../components/ListItem'
-import { styles } from '../styles'
 
 const Wrapper = styled.View`
   flex: 1;
   background-color: #191919;
+`
+
+const Spinner = styled.ActivityIndicator`
+  margin-top: ${responsiveHeight(40)};
+`
+
+const Title = styled.Text`
+  align-self: center;
+  font-size: ${responsiveFontSize(3.5)};
+  margin-bottom: ${responsiveHeight(2)};
+  margin-top: ${responsiveHeight(2)};
+  color: #fff;
+`
+
+const Container = styled.ScrollView`
+  flex-direction: row;
+  margin-left: ${responsiveWidth(2)};
+  height: ${responsiveHeight(32)};
+`
+
+const LastContainer = styled(Container)`
+  margin-bottom: ${responsiveHeight(3)};
 `
 
 class TvShowsScreen extends Component {
@@ -61,54 +87,48 @@ class TvShowsScreen extends Component {
     return (
       <Wrapper>
         {isLoading ? (
-          <ActivityIndicator style={styles.spinner} size="large" color="#fff" />
+          <Spinner size="large" color="#fff" />
         ) : (
           <ScrollView>
-            <Text style={styles.heading}>Popular</Text>
-            <ScrollView horizontal={true}>
-              <View style={styles.container}>
-                {popularTvShows.map(popularTvShow => (
-                  <ListItem
-                    poster={popularTvShow.poster_path}
-                    title={popularTvShow.name}
-                    key={popularTvShow.id}
-                    tvShowID={popularTvShow.id}
-                    navigation={navigation}
-                    type="Show"
-                  />
-                ))}
-              </View>
-            </ScrollView>
-            <Text style={styles.heading}>Top Rated</Text>
-            <ScrollView horizontal={true}>
-              <View style={styles.container}>
-                {topRatedTvShows.map(topRatedTvShows => (
-                  <ListItem
-                    poster={topRatedTvShows.poster_path}
-                    title={topRatedTvShows.name}
-                    key={topRatedTvShows.id}
-                    tvShowID={topRatedTvShows.id}
-                    navigation={navigation}
-                    type="Show"
-                  />
-                ))}
-              </View>
-            </ScrollView>
-            <Text style={styles.heading}>On The Air</Text>
-            <ScrollView horizontal={true}>
-              <View style={[styles.container, styles.lastContainer]}>
-                {onTheAirTvShows.map(onTheAirTvShow => (
-                  <ListItem
-                    poster={onTheAirTvShow.poster_path}
-                    title={onTheAirTvShow.name}
-                    key={onTheAirTvShow.id}
-                    tvShowID={onTheAirTvShow.id}
-                    navigation={navigation}
-                    type="Show"
-                  />
-                ))}
-              </View>
-            </ScrollView>
+            <Title>Popular</Title>
+            <Container horizontal={true}>
+              {popularTvShows.map(popularTvShow => (
+                <ListItem
+                  poster={popularTvShow.poster_path}
+                  title={popularTvShow.name}
+                  key={popularTvShow.id}
+                  tvShowID={popularTvShow.id}
+                  navigation={navigation}
+                  type="Show"
+                />
+              ))}
+            </Container>
+            <Title>Top Rated</Title>
+            <Container horizontal={true}>
+              {topRatedTvShows.map(topRatedTvShows => (
+                <ListItem
+                  poster={topRatedTvShows.poster_path}
+                  title={topRatedTvShows.name}
+                  key={topRatedTvShows.id}
+                  tvShowID={topRatedTvShows.id}
+                  navigation={navigation}
+                  type="Show"
+                />
+              ))}
+            </Container>
+            <Title>On The Air</Title>
+            <LastContainer horizontal={true}>
+              {onTheAirTvShows.map(onTheAirTvShow => (
+                <ListItem
+                  poster={onTheAirTvShow.poster_path}
+                  title={onTheAirTvShow.name}
+                  key={onTheAirTvShow.id}
+                  tvShowID={onTheAirTvShow.id}
+                  navigation={navigation}
+                  type="Show"
+                />
+              ))}
+            </LastContainer>
           </ScrollView>
         )}
       </Wrapper>

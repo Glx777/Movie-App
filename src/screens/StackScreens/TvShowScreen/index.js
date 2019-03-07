@@ -14,7 +14,7 @@ const Container = styled.View`
 `
 
 const Spinner = styled.ActivityIndicator`
-  margin-top: ${({ marginTop }) => marginTop};
+  margin-top: ${responsiveHeight(20)};
 `
 
 class TvShowScreen extends Component {
@@ -44,7 +44,7 @@ class TvShowScreen extends Component {
     return (
       <Container>
         {isLoading ? (
-          <Spinner size="large" color="#fff" marginTop={responsiveHeight(20)} />
+          <Spinner size="large" color="#fff" />
         ) : (
           <ListItemDetails details={tvShowDetails} />
         )}

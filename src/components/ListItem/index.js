@@ -1,18 +1,23 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import {
-  responsiveWidth,
   responsiveHeight,
+  responsiveWidth,
   responsiveFontSize
 } from 'react-native-responsive-dimensions'
 import PropTypes from 'prop-types'
 import styled from 'styled-components/native'
 
-import { chooseMovie, chooseTVShow } from '../../store/actions'
+import {
+  chooseMovie,
+  chooseTVShow,
+  addTvShowPoster,
+  addMoviePoster
+} from '../../store/actions'
 
 const Container = styled.TouchableOpacity`
-  width: 120;
-  margin-right: 15;
+  width: ${responsiveWidth(35)};
+  margin-right: ${responsiveWidth(4)};
 `
 
 const PosterContainer = styled.View`
@@ -26,9 +31,9 @@ const Poster = styled.Image`
 
 const Title = styled.Text`
   color: #fff;
-  margin-top: ${({ marginTop }) => marginTop};
+  margin-top: ${responsiveHeight(1)};
   align-self: center;
-  font-size: ${({ fontSize }) => fontSize};
+  font-size: ${responsiveFontSize(2)};
 `
 
 const ListItem = ({
@@ -47,9 +52,11 @@ const ListItem = ({
         if (type === 'Movie') {
           dispatch(chooseMovie(movieID))
           navigation.navigate(type)
+          dispatch(addMoviePoster(poster))
         } else {
           dispatch(chooseTVShow(tvShowID))
           navigation.navigate(type)
+          dispatch(addTvShowPoster(poster))
         }
       }}
     >
@@ -60,13 +67,7 @@ const ListItem = ({
           source={{ uri: basePosterPath + poster }}
         />
       </PosterContainer>
-      <Title
-        marginRight={responsiveWidth(10)}
-        marginTop={responsiveHeight(1)}
-        fontSize={responsiveFontSize(2)}
-      >
-        {title.length > 13 ? title.slice(0, 12) + '...' : title}
-      </Title>
+      <Title>{title.length > 13 ? title.slice(0, 12) + '...' : title}</Title>
     </Container>
   )
 }
