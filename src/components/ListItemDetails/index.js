@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 import { ScrollView } from 'react-native'
 import {
   responsiveFontSize,
@@ -48,72 +48,74 @@ const Details = styled.View`
   margin-bottom: ${responsiveHeight(2)};
 `
 
-class ListItemDetails extends Component {
-  transformTime(time) {
-    const hours = time / 60
-    const minutes = time % 60
-    return Math.floor(hours) + 'h ' + minutes + 'm'
-  }
+const transformTime = time => {
+  const hours = time / 60
+  const minutes = time % 60
+  return Math.floor(hours) + 'h ' + minutes + 'm'
+}
 
-  render() {
-    const { details, basePosterPath, moviePoster, tvShowPoster } = this.props
-    const poster = details.title ? moviePoster : tvShowPoster
-    return (
-      <Container>
-        <ScrollView>
-          <Poster
-            resizeMode="contain"
-            source={{ uri: basePosterPath + poster }}
-          />
-          <Details>
-            <Title>{details.title ? details.title : details.name}</Title>
-            {details.title ? <Text>{details.tagline}</Text> : null}
-            <Row>
-              <RowItem>
-                {details.release_date
-                  ? details.release_date.slice(0, 4)
-                  : details.first_air_date.slice(0, 4)}
-              </RowItem>
-              {details.runtime ? (
-                <RowItem>{this.transformTime(details.runtime)}</RowItem>
-              ) : null}
-              <RowItem>Adult: {details.adult ? 'Yes' : 'No'}</RowItem>
-            </Row>
-            <Row>
-              {details.genres
-                ? details.genres.map((genre, i) => (
-                    <Genre genre={genre} key={i} />
-                  ))
-                : ''}
-            </Row>
-            {details.vote_average ? (
-              <Text>
-                Rating: {details.vote_average} out of 10. Total votes:
-                {' ' + details.vote_count}
-              </Text>
+const ListItemDetails = ({
+  details,
+  basePosterPath,
+  moviePoster,
+  tvShowPoster
+}) => {
+  const poster = details.title ? moviePoster : tvShowPoster
+  return (
+    <Container>
+      <ScrollView>
+        <Poster
+          resizeMode="contain"
+          source={{ uri: basePosterPath + poster }}
+        />
+        <Details>
+          <Title>{details.title ? details.title : details.name}</Title>
+          {details.title ? <Text>{details.tagline}</Text> : null}
+          <Row>
+            <RowItem>
+              {details.release_date
+                ? details.release_date.slice(0, 4)
+                : details.first_air_date.slice(0, 4)}
+            </RowItem>
+            {details.runtime ? (
+              <RowItem>{transformTime(details.runtime)}</RowItem>
             ) : null}
-            {details.budget ? (
-              <Text>
-                Budget:{' '}
-                {details.budget.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')}
-                {' $'}
-              </Text>
-            ) : null}
-            {details.revenue ? (
-              <Text>
-                Revenue:{' '}
-                {details.revenue.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')}
-                {' $'}
-              </Text>
-            ) : null}
-            {details.overview ? (
-              <Text>Description: {details.overview}</Text>
-            ) : null}
-          </Details>
-        </ScrollView>
-      </Container>
-    )
-  }
+            <RowItem>Adult: {details.adult ? 'Yes' : 'No'}</RowItem>
+          </Row>
+          <Row>
+            {details.genres
+              ? details.genres.map((genre, i) => (
+                  <Genre genre={genre} key={i} />
+                ))
+              : ''}
+          </Row>
+          {details.vote_average ? (
+            <Text>
+              Rating: {details.vote_average} out of 10. Total votes:
+              {' ' + details.vote_count}
+            </Text>
+          ) : null}
+          {details.budget ? (
+            <Text>
+              Budget:{' '}
+              {details.budget.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')}
+              {' $'}
+            </Text>
+          ) : null}
+          {details.revenue ? (
+            <Text>
+              Revenue:{' '}
+              {details.revenue.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')}
+              {' $'}
+            </Text>
+          ) : null}
+          {details.overview ? (
+            <Text>Description: {details.overview}</Text>
+          ) : null}
+        </Details>
+      </ScrollView>
+    </Container>
+  )
 }
 
 ListItemDetails.propTypes = {
